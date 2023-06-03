@@ -1,0 +1,55 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+
+public class z1 extends JFrame {
+    JButton b1;
+    JLabel l1, l2;
+    JTextField text1, text2;
+    eWork knopa = new eWork();
+    public z1(String s){
+        super(s);
+        setLayout(new FlowLayout());
+        b1 = new JButton("Сохранить");
+        l1 = new JLabel("Введите текст не более 25 символов");
+        l2 = new JLabel("Укажите путь к файлу");
+        text1 = new JTextField("", 25);
+        text2 = new JTextField("", 25);
+        add(l1);
+        add(text1);
+        add(l2);
+        add(text2);
+        add(b1);
+        b1.addActionListener(knopa);
+    }
+    public static void main(String[] args) {
+        z1 g = new z1("Запись в файл");
+        g.setVisible(true);
+        g.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        g.setSize(300, 180);
+        g.setLocationRelativeTo(null);
+        g.setResizable(false);
+    }
+    public class eWork implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            if (text1.getText().length() > 25) {
+                JOptionPane.showMessageDialog(z1.this, "Введите текст не более 25 символов!");
+                return;
+            }
+            String input = text1.getText();
+            String path = text2.getText();
+            if (e.getSource() == b1) {
+                try {
+                    FileWriter fwr = new FileWriter(path);
+                    fwr.write(input);
+                    fwr.flush();
+                    fwr.close();
+                    JOptionPane.showMessageDialog(z1.this, "Данные успешно записаны в файл!");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(z1.this, "Ошибка записи в файл: " + ex.getMessage());
+                }
+            }
+        }
+    }
+}
