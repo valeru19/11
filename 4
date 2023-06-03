@@ -1,0 +1,70 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+public class z4 extends JFrame {
+    JButton b1;
+    JLabel l1;
+    JTextField text1, text2, text3, text4, text5, text6, text7;
+    eWork knopa = new eWork();
+    public z4(String s){
+        super(s);
+        setLayout(new FlowLayout());
+        b1 = new JButton("Вычислить");
+        l1 = new JLabel("Случайные числа");
+        text1 = new JTextField("",25);
+        text2 = new JTextField("",25);
+        text3 = new JTextField("",25);
+        text4 = new JTextField("",25);
+        text5 = new JTextField("",25);
+        text6 = new JTextField("",25);
+        text7 = new JTextField("",25);
+        text1.setEditable(false);
+        text2.setEditable(false);
+        text3.setEditable(false);
+        text4.setEditable(false);
+        text5.setEditable(false);
+        text6.setEditable(false);
+        text7.setEditable(false);
+        add(l1);
+        add(text1);
+        add(text2);
+        add(text3);
+        add(text4);
+        add(text5);
+        add(text6);
+        add(text7);
+        add(b1);
+        b1.addActionListener(knopa);
+    }
+    public static void main(String[] args) {
+        z4 g = new z4("Программа для вычисления случайных чисел");
+        g.setVisible(true);
+        g.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        g.setSize(300, 350);
+        g.setLocationRelativeTo(null);
+        g.setResizable(false);
+    }
+    public class eWork implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == b1) {
+                try {
+                    Random rand = new Random();
+                    text1.setText(String.valueOf(rand.nextInt(100)));
+                    text2.setText(String.valueOf(rand.nextInt(100)));
+                    text3.setText(String.valueOf(rand.nextInt(100)));
+                    text4.setText(String.valueOf(rand.nextInt(100)));
+                    text5.setText(String.valueOf(rand.nextInt(100)));
+                    text6.setText(String.valueOf(rand.nextInt(100)));
+                    text7.setText(String.valueOf(rand.nextInt(100)));
+                    JOptionPane.showMessageDialog(z4.this, "Данные успешно записаны!");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(z4.this, "Ошибка! " + ex.getMessage());
+                }
+            }
+        }
+    }
+}
+
