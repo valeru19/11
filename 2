@@ -1,0 +1,97 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+
+public class z2 extends JFrame {
+    JButton b1, b2;
+    JLabel l1, l2, l3, l4, l5, l6;
+    JTextField text1, text2, text3, text4, text5, text6;
+    eWork knopa = new eWork();
+    public z2(String s){
+        super(s);
+        setLayout(new FlowLayout());
+        b1 = new JButton("Записать");
+        b2 = new JButton("Загрузить");
+        l1 = new JLabel("Напишите имя");
+        l2 = new JLabel("Напишите фамилию");
+        l3 = new JLabel("Напишите отчество");
+        l4 = new JLabel("Напишите дату рождения");
+        l5 = new JLabel("Укажите учебную группу");
+        l6 = new JLabel("Укажите путь к файлу");
+        text1 = new JTextField("", 25);
+        text2 = new JTextField("", 25);
+        text3 = new JTextField("", 25);
+        text4 = new JTextField("", 25);
+        text5 = new JTextField("", 25);
+        text6 = new JTextField("", 25);
+        add(l1);
+        add(text1);
+        add(l2);
+        add(text2);
+        add(l3);
+        add(text3);
+        add(l4);
+        add(text4);
+        add(l5);
+        add(text5);
+        add(l6);
+        add(text6);
+        add(b1);
+        add(b2);
+        b1.addActionListener(knopa);
+        b2.addActionListener(knopa);
+    }
+    public static void main(String[] args) {
+        z2 g = new z2("Запись в файл");
+        g.setVisible(true);
+        g.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        g.setSize(300, 400);
+        g.setLocationRelativeTo(null);
+        g.setResizable(false);
+    }
+    public class eWork implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            String s1 = text1.getText();
+            String s2 = text2.getText();
+            String s3 = text3.getText();
+            String s4 = text4.getText();
+            String s5 = text5.getText();
+            String path = text6.getText();
+            if (e.getSource() == b1) {
+                try {
+                    FileWriter fwr = new FileWriter(path);
+                    fwr.write(s1 + "\n");
+                    fwr.write(s2 + "\n");
+                    fwr.write(s3 + "\n");
+                    fwr.write(s4 + "\n");
+                    fwr.write(s5 + "\n");
+                    fwr.flush();
+                    fwr.close();
+                    JOptionPane.showMessageDialog(z2.this, "Данные успешно записаны в файл!");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(z2.this, "Файл не найден: " + ex.getMessage());
+                }
+            }
+            if (e.getSource() == b2){
+                try{
+                    BufferedReader fread = new BufferedReader(new FileReader(path));
+                    String line1 = fread.readLine();
+                    String line2 = fread.readLine();
+                    String line3 = fread.readLine();
+                    String line4 = fread.readLine();
+                    String line5 = fread.readLine();
+                    fread.close();
+                    text1.setText(line1);
+                    text2.setText(line2);
+                    text3.setText(line3);
+                    text4.setText(line4);
+                    text5.setText(line5);
+                    JOptionPane.showMessageDialog(z2.this, "Данные успешно загружены из файла!");
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(z2.this, "Файл не найден!" + ex.getMessage());
+                }
+            }
+        }
+    }
+}
